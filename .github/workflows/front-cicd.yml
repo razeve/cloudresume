@@ -20,6 +20,6 @@ jobs:
 
         env:
           AWS_REGION: ${{ secrets.AWS_REGION }}  # Optional: use GitHub secret for region if desired
-          AWS_ROLE_ARN: arn:aws:iam::145059604472:role/github-tos3-oicd  # Replace with your IAM role ARN
+          AWS_ROLE_ARN: arn:aws:iam::145059604472:role/github-tos3-oicd  # Replace with your IAM role ARNs
           SOURCE_DIR: './'
           DEST_BUCKET: ${{secrets.DEST_BUCKET}}
