@@ -1,0 +1,25 @@
+name: Sync to S3
+
+on:
+  push:
+    branches:
+      - main  # Adjust this to the branch you want to monitor
+
+jobs:
+  sync-to-s3:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Sync files to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: '--exact-timestamps'  # Optional: only sync files if they have changed
+
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}  # Optional: use GitHub secret for region if desired
+          AWS_ROLE_ARN: arn:aws:iam::YOUR_AWS_ACCOUNT_ID:role/YOUR_ROLE_NAME  # Replace with your IAM role ARN
+          SOURCE_DIR: './'
+          DEST_BUCKET: ${{secrets.DEST_BUCKET}}
