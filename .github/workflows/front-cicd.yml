@@ -21,6 +21,6 @@ jobs:
         env:
           AWS_REGION: 'us-east-2' # Optional: use GitHub secret for region if desired
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-          AWS_SECRET_ACCESS_ID: ${{secrets.AWS_SECRET_ACCESS_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           SOURCE_DIR: './'
           DEST_BUCKET: 'mytestgithub'
