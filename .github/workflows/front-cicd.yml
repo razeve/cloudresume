@@ -32,3 +32,7 @@ jobs:
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --delete --follow-symlinks
+        env:
+            SOURCE_DIR: 'website-aws'  # Replace with your build directory
+            AWS_S3_BUCKET: 'mytestgithub'  # Replace with your S3 bucket name
+          
