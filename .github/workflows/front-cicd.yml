@@ -3,7 +3,12 @@ name: Sync to S3
 on:
   push:
     branches:
-      - main  # Adjust this to the branch you want to monitor
+      - main  # Adjust this to the branch you want to monitor.
+env:
+        AWS_REGION: 'us-east-2' # Optional: use GitHub secret for region if desired
+        SOURCE_DIR: 'website-aws'
+        AWS_S3_BUCKET: 'mytestgithub'
+
 permissions:
   id-token: write # This is required for requesting the JWT
 
@@ -21,9 +26,13 @@ jobs:
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --follow-symlinks --
-          role-to-assume: arn:aws:iam::145059604472:role/github-tos3-oicd
+      
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+         role-to-assume: arn:aws:iam::1234567890:role/example-role
+         aws-region: 'us-east-2'
+    
+          
 
-        env:
-          AWS_REGION: 'us-east-2' # Optional: use GitHub secret for region if desired
-          SOURCE_DIR: 'website-aws'
-          AWS_S3_BUCKET: 'mytestgithub'
+      
