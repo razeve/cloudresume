@@ -1,38 +1,28 @@
-name: Sync to S3
+name: Deploy to S3
 
 on:
   push:
     branches:
-      - main
-
-env:
-  AWS_REGION: 'us-east-2'
-  SOURCE_DIR: 'website-aws'
-  AWS_S3_BUCKET: 'mytestgithub'
+      - main  # Trigger deployment on push to the main branch
 
 permissions:
-  id-token: write
-  contents: read
+  id-token: write  # Required for OpenID Connect (OIDC)
+  contents: read   # Allows reading the repository contents
 
 jobs:
-  sync-to-s3:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          role-to-assume: arn:aws:iam::145059604472:role/github-tos3-oicd
-          aws-region: 'us-east-2'
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Sync files to S3
-        uses: jakejarvis/s3-sync-action@master
-        with:
-          args: --acl public-read --delete --follow-symlinks
-        env:
-            SOURCE_DIR: 'website-aws'  # Replace with your build directory
-            AWS_S3_BUCKET: 'mytestgithub'  # Replace with your S3 bucket name
-          
+    - name: Configure AWS credentials from OIDC
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        role-to-assume: arn:aws:iam::145059604472:role/github-to-s3
+        aws-region: us-east-2
+
+    - name: Sync files to S3
+      run: |
+        aws s3 sync website-aws s3://mytestgithub/ --delete
