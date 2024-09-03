@@ -1,5 +1,5 @@
 // Define the URL of your API
-const apiUrl = 'https://4pi5b84b66.execute-api.us-east-2.amazonaws.com/test/helloworld';
+const apiUrl = 'https://nfqkfv2rb8.execute-api.us-east-2.amazonaws.com/dev/lambda';
 
 // Function to fetch data from the API and update the webpage
 async function fetchAndDisplayVisitCount() {
